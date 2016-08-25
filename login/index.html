@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<!--=======Font Open Sans======-->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<!--=======Custom Style======-->
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		.hidden {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="alert alert-success hidden" role="alert" id="logout">You were logged out successfully!</div>
+	<div class="form-box">
+		<div class="head" id="title">Login to Jeffrey Forms</div>
+		<div id="login-form">
+			<div class="form-group" id="email-box">
+				<label class="label-control"><span class="label-text">Email</span></label>
+				<input type="email" name="email" id="email" class="login-form-control" />
+			</div>
+			<div class="form-group" id="password-box">
+				<label class="label-control"><span class="label-text">Password</span></label>
+				<input type="password" name="password" id="password" class="login-form-control" />
+			</div>
+			<div class="form-group" class="hidden" id="confirm-box">
+				<label class="label-control"><span class="label-text">Confirm Password</span></label>
+				<input type="password" name="confirm" id="confirm" class="login-form-control" />
+			</div>
+
+			<p id="error-box" class="text-danger">Error: <span id="error"></span></p>
+			<input type="button" value="Login" class="login-btn" id="login-btn" />
+			<p class="text-muted"><a id="create" href="/login/#create">create an account</a> or <a id="retrieve" href="/login/#forgot-password">retrieve your password</a>.</p>
+		</div>
+	</div>
+
+
+	<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyCKwBAaeo8kzGBwKyR6TwuI88womFvtRIw",
+			authDomain: "jfiles.firebaseapp.com",
+			databaseURL: "https://jfiles.firebaseio.com",
+			storageBucket: "firebase-jfiles.appspot.com",
+		};
+		firebase.initializeApp(config);
+	</script>
+
+
+	<script src="js/jquery.js"></script>
+
+	<script type="text/javascript">
+		/* global $*/
+		$(window).load(function() {
+			$('.form-group input').on('focus blur', function(e) {
+				$(this).parents('.form-group').toggleClass('active', (e.type === 'focus' || this.value.length > 0));
+			}).trigger('blur');
+		});
+	</script>
+	<script>
+		/* global $ firebase*/
+		function getQuery(name, url) {
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+		if (window.location.hash === "#logout") {
+			firebase.auth().signOut().then(function() {
+				$("#logout").removeClass("hidden");
+			}, function(error) {
+				// An error happened.
+				console.log(error);
+			});
+		}
+		else if (window.location.hash === "#create") {
+			$("#title").val("Create an account");
+			$("#confirm-box").removeClass("hidden");
+			$("#login-btn").click(function() {
+				var email = $("#email").val();
+				var password = $("#password").val();
+				if (password !== $("#confirm").val()) {
+					$("#password").val("");
+					$("#confirm").val("");
+					$("#error").html("Your passwords don't match!");
+					return false;
+				}
+				firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+					// Handle Errors here.
+					var errorCode = error.code;
+					var errorMessage = error.message;
+					// ...
+					$("#error").html(errorMessage)
+				});
+			});
+
+		}
+		else {
+
+			$("#login-btn").click(function() {
+				$("#error").html("");
+				var email = $("#email").val();
+				var password = $("#password").val();
+				firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+					$("#error").html(error.message);
+				});
+				firebase.auth().onAuthStateChanged(function(user) {
+					if (user) {
+						if (!getQuery("continue")) {
+							window.location.href = "/home/?authUser=" + user;
+						}
+						else {
+							window.location.href = decodeURIComponent(getQuery("continue"));
+						}
+					}
+				});
+			});
+		}
+	</script>
+</body>
+
+</html>
