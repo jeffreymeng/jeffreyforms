@@ -109,6 +109,7 @@
 		}
 		if (getQuery("mode") === "logout") {
 			firebase.auth().signOut().then(function() {
+				window.location.search = "";
 				$("#logout").removeClass("hidden");
 			}, function(e) {
 				error(e.message, e);
