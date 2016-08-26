@@ -7,8 +7,8 @@
 	<!--=======Font Open Sans======-->
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<!--=======Custom Style======-->
-	<link rel="stylesheet" href="css/login.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="login.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<style>
 		.hidden {
 			display: none;
@@ -17,7 +17,10 @@
 </head>
 
 <body>
-	<div class="alert alert-success hidden" role="alert" id="logout">You were logged out successfully!</div>
+	<div class="alert alert-success hidden" role="alert" id="logout"><p>You were logged out successfully!</p></div>
+	<div class="alert alert-danger hidden" role="alert" id="error-box"><p id="error"></p></div>
+	<div class="alert alert-success hidden" role="alert" id="success-box"><p id="success"></p></div>
+	
 	<div class="form-box">
 		<div class="head" id="title">Login to Jeffrey Forms</div>
 		<div id="login-form">
@@ -34,9 +37,9 @@
 				<input type="password" name="confirm" id="confirm" class="login-form-control" />
 			</div>
 
-			<p id="error-box" class="text-danger">Error: <span id="error"></span></p>
+
 			<input type="button" value="Login" class="login-btn" id="login-btn" />
-			<p class="text-muted"><a id="create" href="/login/#create">create an account</a> or <a id="retrieve" href="/login/#forgot-password">retrieve your password</a>.</p>
+			<p class="text-muted"><a id="create" href="/login/#create">create an account</a> or <a id="reset" href="/login/#reset">retrieve your password</a>.</p>
 		</div>
 	</div>
 
@@ -54,7 +57,7 @@
 	</script>
 
 
-	<script src="js/jquery.js"></script>
+	<script src="/js/jquery.js"></script>
 
 	<script type="text/javascript">
 		/* global $*/
@@ -66,6 +69,19 @@
 	</script>
 	<script>
 		/* global $ firebase*/
+		function error(txt, fbo) {
+			$("#success-box").addClass("hidden");
+			$("#error").html(txt);
+			$("#error-box").removeClass("hidden");
+			
+			if (fbo) {
+				console.log(fbo)
+			}
+		}
+		function success (txt) {
+			$("#error").html("");
+			$("#success").html(txt);
+		}
 		function getQuery(name, url) {
 			if (!url) url = window.location.href;
 			name = name.replace(/[\[\]]/g, "\\$&");
@@ -75,15 +91,45 @@
 			if (!results[2]) return '';
 			return decodeURIComponent(results[2].replace(/\+/g, " "));
 		}
-		if (window.location.hash === "#logout") {
+		if (getQuery("mode") === "logout") {
 			firebase.auth().signOut().then(function() {
 				$("#logout").removeClass("hidden");
-			}, function(error) {
-				// An error happened.
-				console.log(error);
+			}, function(e) {
+				error(e.message, e);
+
 			});
 		}
-		else if (window.location.hash === "#create") {
+		else if (getQuery("mode") === "resetPassword") {
+			$("#login-btn").attr("value", "Reset!")
+			$("#title").val("Enter a new password");
+			$("#email-box").addClass("hidden");
+			$("#confirm-box").removeClass("hidden");
+			$("#login-btn").click(function() {
+			
+				var password = $("#password").val();
+				if (password !== $("#confirm").val()) {
+					$("#password").val("");
+					$("#confirm").val("");
+					error("the passwords don't match!");
+					return false;
+				}
+				
+		
+				auth.verifyPasswordResetCode(actionCode).then(function(email) {
+   
+    auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
+				throwError("Your account password was reset. You can <a href='/login/'>login</a> now.");
+    }).catch(function(e) {
+      error(e.message, e);
+    });
+  }).catch(function(e) {
+    error(e.message, e);
+  });
+			});
+
+		}
+		else if (getQuery("mode") === "create") {
+			$("#login-btn").attr("value", "Create an account!");
 			$("#title").val("Create an account");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
@@ -92,27 +138,49 @@
 				if (password !== $("#confirm").val()) {
 					$("#password").val("");
 					$("#confirm").val("");
-					$("#error").html("Your passwords don't match!");
+					error("The passwords don't match");
 					return false;
 				}
-				firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-					// Handle Errors here.
-					var errorCode = error.code;
-					var errorMessage = error.message;
-					// ...
-					$("#error").html(errorMessage)
+				
+		
+				firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+				success("Your account was created. You can <a href='/login/'>login</a> now.");
+					}).catch(function(e) {
+
+					error(e.message, e)
 				});
 			});
+
+		}
+		else if (getQuery("mode") === "reset") {
+			$("#title").val("Reset your password");
+			$("#password-box").removeClass("hidden");
+			$("#confirm-box").removeClass("hidden");
+			$("#login-btn").click(function() {
+				var email = $("#email").val();
+				
+				firebase.auth().sendPasswordResetEmail(email).then(function(){
+				success("A password reset email was sent. If you do not recieve an email within the next 10 minutes, you did not give an email linked to an account.");
+		
+				}).catch(function(e) {
+					// Handle Errors here.
+					if (e.code === "auth/invalid-email") {
+						error(e.message, e);
+					}
+					
+					
+				});
+					});
 
 		}
 		else {
 
 			$("#login-btn").click(function() {
-				$("#error").html("");
+				error("");
 				var email = $("#email").val();
 				var password = $("#password").val();
-				firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-					$("#error").html(error.message);
+				firebase.auth().signInWithEmailAndPassword(email, password).catch(function(e) {
+					error(e.message, e);
 				});
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (user) {
