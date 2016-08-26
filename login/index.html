@@ -90,7 +90,11 @@
 			$("#success").html(txt);
 			$("#success-box").removeClass("hidden");
 		}
-
+		function clearAll() {
+			$("#email").val("")
+			$("#password").val("")
+			$("#confirm").val("")
+		}
 		function getQuery(name, url) {
 			if (!url) url = window.location.href;
 			name = name.replace(/[\[\]]/g, "\\$&");
@@ -125,10 +129,11 @@
 				}
 
 
-				auth.verifyPasswordResetCode(actionCode).then(function(email) {
+				firebase.auth().verifyPasswordResetCode(getQuery("oobCode")).then(function(email) {
 
-					auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
-						throwError("Your account password was reset. You can <a href='/login/'>login</a> now.");
+					firebase.auth().confirmPasswordReset(getQuery("oobCode"), $("#password").val()).then(function(resp) {
+						clearAll()
+						success("Your account password was reset. You can <a href='/login/'>login</a> now.");
 					}).catch(function(e) {
 						error(e.message, e);
 					});
@@ -140,7 +145,7 @@
 		}
 		else if (getQuery("mode") === "create") {
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
-			$("#login-btn").attr("value", "Create an account!");
+			$("#login-btn").attr("value", "Create!");
 			$("#title").val("Create an account");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
@@ -155,7 +160,8 @@
 
 
 				firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-					success("Your account was created. You can <a href='/login/'>login</a> now.");
+					clearAll()
+					success("Your account was created. You can <a href='/login/' class='alert-link'>login</a> now.");
 				}).catch(function(e) {
 
 					error(e.message, e)
@@ -171,6 +177,7 @@
 				var email = $("#email").val();
 
 				firebase.auth().sendPasswordResetEmail(email).then(function() {
+					clearAll()
 					success("A password reset email was sent. If you do not recieve an email within the next 10 minutes, you did not give an email linked to an account.");
 
 				}).catch(function(e) {
