@@ -90,11 +90,13 @@
 			$("#success").html(txt);
 			$("#success-box").removeClass("hidden");
 		}
+
 		function clearAll() {
 			$("#email").val("")
 			$("#password").val("")
 			$("#confirm").val("")
 		}
+
 		function getQuery(name, url) {
 			if (!url) url = window.location.href;
 			name = name.replace(/[\[\]]/g, "\\$&");
@@ -115,7 +117,7 @@
 		else if (getQuery("mode") === "resetPassword") {
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Reset!")
-			$("#title").val("Enter a new password");
+			$("#title").html("Enter a new password");
 			$("#email-box").addClass("hidden");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
@@ -146,7 +148,7 @@
 		else if (getQuery("mode") === "create") {
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Create!");
-			$("#title").val("Create an account");
+			$("#title").html("Create an account");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
 				var email = $("#email").val();
@@ -170,7 +172,7 @@
 
 		}
 		else if (getQuery("mode") === "reset") {
-			$("#title").val("Reset your password");
+			$("#title").html("Reset your password");
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#password-box").addClass("hidden");
 			$("#login-btn").click(function() {
