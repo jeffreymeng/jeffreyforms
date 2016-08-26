@@ -17,10 +17,16 @@
 </head>
 
 <body>
-	<div class="alert alert-success hidden" role="alert" id="logout"><p>You were logged out successfully!</p></div>
-	<div class="alert alert-danger hidden" role="alert" id="error-box"><p id="error"></p></div>
-	<div class="alert alert-success hidden" role="alert" id="success-box"><p id="success"></p></div>
-	
+	<div class="alert alert-success hidden" role="alert" id="logout">
+		<p>You were logged out successfully!</p>
+	</div>
+	<div class="alert alert-danger hidden" role="alert" id="error-box">
+		<p id="error"></p>
+	</div>
+	<div class="alert alert-success hidden" role="alert" id="success-box">
+		<p id="success"></p>
+	</div>
+
 	<div class="form-box">
 		<div class="head" id="title">Login to Jeffrey Forms</div>
 		<div id="login-form">
@@ -39,7 +45,7 @@
 
 
 			<input type="button" value="Login" class="login-btn" id="login-btn" />
-			<p class="text-muted"><a id="create" href="/login/?mode=create">create an account</a> or <a id="reset" href="/login/?mode=reset">retrieve your password</a>.</p>
+			<p class="text-muted" id="opt-bar"><a id="create" href="/login/?mode=create">create an account</a> or <a id="reset" href="/login/?mode=reset">retrieve your password</a>.</p>
 		</div>
 	</div>
 
@@ -73,15 +79,18 @@
 			$("#success-box").addClass("hidden");
 			$("#error").html(txt);
 			$("#error-box").removeClass("hidden");
-			
+
 			if (fbo) {
 				console.log(fbo)
 			}
 		}
-		function success (txt) {
-			$("#error").html("");
+
+		function success(txt) {
+			$("#error-box").addClass("hidden");
 			$("#success").html(txt);
+			$("#success-box").removeClass("hidden");
 		}
+
 		function getQuery(name, url) {
 			if (!url) url = window.location.href;
 			name = name.replace(/[\[\]]/g, "\\$&");
@@ -100,12 +109,13 @@
 			});
 		}
 		else if (getQuery("mode") === "resetPassword") {
+			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Reset!")
 			$("#title").val("Enter a new password");
 			$("#email-box").addClass("hidden");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
-			
+
 				var password = $("#password").val();
 				if (password !== $("#confirm").val()) {
 					$("#password").val("");
@@ -113,22 +123,23 @@
 					error("the passwords don't match!");
 					return false;
 				}
-				
-		
+
+
 				auth.verifyPasswordResetCode(actionCode).then(function(email) {
-   
-    auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
-				throwError("Your account password was reset. You can <a href='/login/'>login</a> now.");
-    }).catch(function(e) {
-      error(e.message, e);
-    });
-  }).catch(function(e) {
-    error(e.message, e);
-  });
+
+					auth.confirmPasswordReset(actionCode, newPassword).then(function(resp) {
+						throwError("Your account password was reset. You can <a href='/login/'>login</a> now.");
+					}).catch(function(e) {
+						error(e.message, e);
+					});
+				}).catch(function(e) {
+					error(e.message, e);
+				});
 			});
 
 		}
 		else if (getQuery("mode") === "create") {
+			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Create an account!");
 			$("#title").val("Create an account");
 			$("#confirm-box").removeClass("hidden");
@@ -141,11 +152,11 @@
 					error("The passwords don't match");
 					return false;
 				}
-				
-		
-				firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-				success("Your account was created. You can <a href='/login/'>login</a> now.");
-					}).catch(function(e) {
+
+
+				firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+					success("Your account was created. You can <a href='/login/'>login</a> now.");
+				}).catch(function(e) {
 
 					error(e.message, e)
 				});
@@ -154,23 +165,23 @@
 		}
 		else if (getQuery("mode") === "reset") {
 			$("#title").val("Reset your password");
-			$("#password-box").removeClass("hidden");
-			$("#confirm-box").removeClass("hidden");
+			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
+			$("#password-box").addClass("hidden");
 			$("#login-btn").click(function() {
 				var email = $("#email").val();
-				
-				firebase.auth().sendPasswordResetEmail(email).then(function(){
-				success("A password reset email was sent. If you do not recieve an email within the next 10 minutes, you did not give an email linked to an account.");
-		
+
+				firebase.auth().sendPasswordResetEmail(email).then(function() {
+					success("A password reset email was sent. If you do not recieve an email within the next 10 minutes, you did not give an email linked to an account.");
+
 				}).catch(function(e) {
 					// Handle Errors here.
 					if (e.code === "auth/invalid-email") {
 						error(e.message, e);
 					}
-					
-					
+
+
 				});
-					});
+			});
 
 		}
 		else {
@@ -185,7 +196,7 @@
 				firebase.auth().onAuthStateChanged(function(user) {
 					if (user) {
 						if (!getQuery("continue")) {
-							window.location.href = "/home/?authUser=" + user;
+							window.location.href = "/home/";
 						}
 						else {
 							window.location.href = decodeURIComponent(getQuery("continue"));
