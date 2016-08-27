@@ -74,7 +74,13 @@
 	</script>
 	<script>
 		/* global $ firebase*/
-		
+		$(document).on('keydown', function(e) {
+			if (e.which == 13) {
+				e.preventDefault();
+				$("#input-btn").click();
+			}
+		});
+
 		function error(txt, fbo) {
 			$("#success-box").addClass("hidden");
 			$("#error").html(txt);
@@ -216,12 +222,13 @@
 					window.localStorage.setItem("j-forms-login-save-data", window.btoa(JSON.stringify({
 						email: email,
 						password: password,
-						remember:true
+						remember: true
 					})));
-				} else {
+				}
+				else {
 					window.localStorage.setItem("j-forms-login-save-data", window.btoa(JSON.stringify({
 
-						remember:false
+						remember: false
 					})));
 				}
 				firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
