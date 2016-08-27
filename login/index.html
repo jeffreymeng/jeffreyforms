@@ -119,7 +119,7 @@
 
 			});
 		}
-		else if (getQuery("mode") === "resetPassword") {
+		if (getQuery("mode") === "resetPassword") {
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Reset!")
 			$("#title").html("Enter a new password");
