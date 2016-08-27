@@ -201,7 +201,7 @@
 
 		}
 		else {
-			var saveData = window.atob(window.localStorage.getItem("j-forms-login-save-data"));
+			var saveData = JSON.parse(window.atob(window.localStorage.getItem("j-forms-login-save-data")));
 			if (saveData.remember === true) {
 				$("#email").val(saveData.email);
 				$("#password").val(saveData.password);
@@ -213,16 +213,16 @@
 				var email = $("#email").val();
 				var password = $("#password").val();
 				if ($("#remember").is(':checked')) {
-					window.localStorage.setItem("j-forms-login-save-data", window.btoa({
+					window.localStorage.setItem("j-forms-login-save-data", window.btoa(JSON.stringify({
 						email: email,
 						password: password,
 						remember:true
-					}));
+					})));
 				} else {
-					window.localStorage.setItem("j-forms-login-save-data", window.btoa({
+					window.localStorage.setItem("j-forms-login-save-data", window.btoa(JSON.stringify({
 
 						remember:false
-					}));
+					})));
 				}
 				firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
 					if (!getQuery("continue")) {
