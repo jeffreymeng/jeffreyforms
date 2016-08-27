@@ -42,8 +42,7 @@
 				<label class="label-control"><span class="label-text">Confirm Password</span></label>
 				<input type="password" name="confirm" id="confirm" class="login-form-control" />
 			</div>
-
-
+			<input type="checkbox" id="remember">Remember Me<br>
 			<input type="button" value="Login" class="login-btn" id="login-btn" />
 			<p class="text-muted" id="opt-bar"><a id="create" href="/login/?mode=create">create an account</a> or <a id="reset" href="/login/?mode=reset">retrieve your password</a>.</p>
 		</div>
@@ -72,10 +71,10 @@
 				$(this).parents('.form-group').toggleClass('active', (e.type === 'focus' || this.value.length > 0));
 			}).trigger('blur');
 		});
-		
 	</script>
 	<script>
 		/* global $ firebase*/
+		
 		function error(txt, fbo) {
 			$("#success-box").addClass("hidden");
 			$("#error").html(txt);
@@ -109,10 +108,10 @@
 		}
 		if (getQuery("mode") === "logout") {
 			firebase.auth().signOut().then(function() {
-				    window.onbeforeunload = function (e) {
-        
-       window.location.search = "";
-    };
+				window.onbeforeunload = function(e) {
+
+					window.location.search = "";
+				};
 				$("#logout").removeClass("hidden");
 			}, function(e) {
 				error(e.message, e);
@@ -120,6 +119,7 @@
 			});
 		}
 		if (getQuery("mode") === "resetPassword") {
+			$("#remember").hide();
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Reset!")
 			$("#title").html("Enter a new password");
@@ -151,6 +151,7 @@
 
 		}
 		else if (getQuery("mode") === "create") {
+			$("#remember").hide();
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#login-btn").attr("value", "Create!");
 			$("#title").html("Create an account");
@@ -177,6 +178,7 @@
 
 		}
 		else if (getQuery("mode") === "reset") {
+			$("#remember").hide();
 			$("#title").html("Reset your password");
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>")
 			$("#password-box").addClass("hidden");
@@ -199,22 +201,40 @@
 
 		}
 		else {
+			var saveData = window.atob(window.localStorage.getItem("j-forms-login-save-data"));
+			if (saveData.remember === true) {
+				$("#email").val(saveData.email);
+				$("#password").val(saveData.password);
+				$("#remember").prop('checked', true);
 
+			}
 			$("#login-btn").click(function() {
-				
+
 				var email = $("#email").val();
 				var password = $("#password").val();
-				firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
+				if ($("#remember").is(':checked')) {
+					window.localStorage.setItem("j-forms-login-save-data", window.btoa({
+						email: email,
+						password: password,
+						remember:true
+					}));
+				} else {
+					window.localStorage.setItem("j-forms-login-save-data", window.btoa({
+
+						remember:false
+					}));
+				}
+				firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
 					if (!getQuery("continue")) {
-							window.location.href = "/home/";
-						}
-						else {
-							window.location.href = decodeURIComponent(getQuery("continue"));
-						}
+						window.location.href = "/home/";
+					}
+					else {
+						window.location.href = decodeURIComponent(getQuery("continue"));
+					}
 				}).catch(function(e) {
 					error(e.message, e);
 				});
-				
+
 			});
 		}
 	</script>
