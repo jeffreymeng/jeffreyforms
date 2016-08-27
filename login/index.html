@@ -201,7 +201,7 @@
 		else {
 
 			$("#login-btn").click(function() {
-				error("");
+				
 				var email = $("#email").val();
 				var password = $("#password").val();
 				firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
