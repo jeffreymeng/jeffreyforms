@@ -18,10 +18,10 @@ function append(data) {
 		special += " validate";
 	}
 	if (type === "text") {
-		content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + special + "'>";
+		content = "<p class='label question label-" + type + "'>" + val + "</p><br><input type='text' id='input-" + id + "' class='form-control text-input" + special + "'>";
 	}
 	else if (type === "number") {
-		content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='number' id='input-" + id + "' class='form-control number-input" + special + "'>";
+		content = "<p class='label question label-" + type + "'>" + val + "</p><br><input type='number' id='input-" + id + "' class='form-control number-input" + special + "'>";
 	}
 
 
