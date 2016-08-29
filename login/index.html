@@ -132,7 +132,7 @@
 			$("#email-box").addClass("hidden");
 			$("#confirm-box").removeClass("hidden");
 			$("#login-btn").click(function() {
-				if ($("#email").val().replace(" ", "") === "" || $("#password").val().replace(" ", "") === "" || $("#confirm").val().replace(" ", "") === "") {
+				if ($("#password").val().replace(" ", "") === "" || $("#confirm").val().replace(" ", "") === "") {
 					error("All fields are required");
 				}
 				else {
