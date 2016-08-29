@@ -11,10 +11,10 @@ function append(data) {
     var validate = data.validate;
     switch (type) {
         case "text":
-            content="<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
+            content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         case "number":
-            content="<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
+            content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         default:
             console.log("Internal Append Box Error: type invalid");
@@ -27,13 +27,17 @@ function append(data) {
 
 function ready() {
     var data = [{
-        id:"-SKdjaijfuaisdvmadsoI",
-        type:"text",
-        val:"What is your full name?",
-        required:true,
-        validate:true
+        id: "-SKdjaijfuaisdvmadsoI",
+        type: "text",
+        val: "What is your full name?",
+        required: true,
+        validate: true
     }];
-    for (var i = 0; i < data.length; i ++) {
+    var info = {
+        submit: "Submit"
+    };
+    for (var i = 0; i < data.length; i++) {
         append(data[i]);
     }
+    $("#form-submit-btn").html(info.submit);
 }
