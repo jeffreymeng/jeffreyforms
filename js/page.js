@@ -2,29 +2,20 @@
 /* global $ */
 ready();
 
-function appendBox(id, type, val, validate) {
-    var content = type;
-    switch (type) {
-        case "Oranges":
-            console.log("Oranges are $0.59 a pound.");
+function appendBox(id, type, val, required, validate) {
+    var content;
+    switch (type.type) {
+        case "text":
+            content="<input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + validate === true ? " required" : "" + "'>";
             break;
-        case "Apples":
-            console.log("Apples are $0.32 a pound.");
-            break;
-        case "Bananas":
-            console.log("Bananas are $0.48 a pound.");
-            break;
-        case "Cherries":
-            console.log("Cherries are $3.00 a pound.");
-            break;
-        case "Papayas":
-            console.log("Mangoes and papayas are $2.79 a pound.");
+        case "number":
+            content="<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + validate === true ? " required" : "" + "'>";
             break;
         default:
-            throw new Error("Internal Error: type invalid");
+            console.log("Internal Append Box Error: type invalid");
     }
 
-    $("#").append('<div id="Content-Box-' + id + '" class="content-box input-box ' + validate === true ? "validate" : "" + '">' +
+    $("#content-box").append('<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box' + validate === true ? " validate" : "" + validate === true ? " required" : "" + '">' +
         content +
         '</div>');
 }

@@ -42,7 +42,7 @@
 				<label class="label-control"><span class="label-text">Confirm Password</span></label>
 				<input type="password" name="confirm" id="confirm" class="login-form-control" />
 			</div>
-			<input type="checkbox" id="remember">Remember Me<br>
+			<div id="rem-box" class="hidden"><input type="checkbox" id="remember">Remember Me<br></div>
 			<input type="button" value="Login" class="login-btn" id="login-btn" />
 			<p class="text-muted" id="opt-bar"><a id="create" href="/login/?mode=create">create an account</a> or <a id="reset" href="/login/?mode=reset">retrieve your password</a>.</p>
 		</div>
@@ -125,7 +125,7 @@
 			});
 		}
 		if (getQuery("mode") === "resetPassword") {
-			$("#remember").hide();
+		
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>");
 			$("#login-btn").attr("value", "Reset!");
 			$("#title").html("Enter a new password");
@@ -163,7 +163,7 @@
 		}
 		else if (getQuery("mode") === "create") {
 
-			$("#remember").hide();
+		
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>");
 			$("#login-btn").attr("value", "Create!");
 			$("#title").html("Create an account");
@@ -195,7 +195,7 @@
 
 		}
 		else if (getQuery("mode") === "reset") {
-			$("#remember").hide();
+		
 			$("#title").html("Reset your password");
 			$("#opt-bar").html("Or <a href='/login/'>Login</a>");
 			$("#password-box").addClass("hidden");
@@ -224,6 +224,7 @@
 
 		}
 		else {
+			$("#rem-box").removeClass("hidden");
 			var saveData = JSON.parse(window.atob(window.localStorage.getItem("j-forms-login-save-data")));
 			if (saveData.remember === true) {
 				$("#email").val(saveData.email);
