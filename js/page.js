@@ -10,16 +10,14 @@ function append(data) {
 	var required = data.required;
 	var validate = data.validate;
 	var content;
-	switch (type) {
-		case "text":
-			content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
-			break;
-		case "number":
-			content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
-			break;
-		default:
-			console.log("Internal Append Box Error: type invalid");
+
+	if (type === "text") {
+		content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
 	}
+	else if (type === "number") {
+		content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
+	}
+
 	var special = "";
 	if (required) {
 		special = " required";
