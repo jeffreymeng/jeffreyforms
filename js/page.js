@@ -3,12 +3,13 @@
 ready();
 
 function append(data) {
-    var content;
+    console.log(data);
     var id = data.id;
     var type = data.type;
     var val = data.val;
     var required = data.required;
     var validate = data.validate;
+    var content;
     switch (type) {
         case "text":
             content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
