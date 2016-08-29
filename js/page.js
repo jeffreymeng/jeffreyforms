@@ -27,7 +27,7 @@ function append(data) {
 	if (validate) {
 		special += " validate";
 	}
-
+	console.log(content);
 	var toappend = '<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box ' + special + '">' + content + '</div>';
 
 	console.log(toappend);
