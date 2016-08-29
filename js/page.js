@@ -20,10 +20,11 @@ function append(data) {
         default:
             console.log("Internal Append Box Error: type invalid");
     }
-
-    $("#main-content-box-page-1").append('<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box' + validate === true ? " validate" : "" + required === true ? " required" : "" + '">' +
+    var toappend = '<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box' + validate === true ? " validate" : "" + required === true ? " required" : "" + '">' +
         content +
-        '</div>');
+        '</div>';
+        console.log(toappend);
+    $("#main-content-box-page-1").append(toappend);
 }
 
 function ready() {
