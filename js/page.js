@@ -36,7 +36,7 @@ function ready() {
     var info = {
         submit: "Submit"
     };
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i <= data.length; i++) {
         console.log(data[i]);
         append(data[i]);
     }
