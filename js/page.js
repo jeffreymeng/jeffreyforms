@@ -37,9 +37,10 @@ function ready() {
     var info = {
         submit: "Submit"
     };
+    $("#form-submit-btn").html(info.submit);
     for (var i = 0; i < data.length; i++) {
         console.log(data[i]);
         append(data[i]);
     }
-    $("#form-submit-btn").html(info.submit);
+   
 }
