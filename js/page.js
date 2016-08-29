@@ -2,24 +2,38 @@
 /* global $ */
 ready();
 
-function appendBox(id, type, val, required, validate) {
+function append(data) {
     var content;
-    switch (type.type) {
+    var id = data.id;
+    var type = data.type;
+    var val = data.val;
+    var required = data.required;
+    var validate = data.validate;
+    switch (type) {
         case "text":
-            content="<input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + validate === true ? " required" : "" + "'>";
+            content="<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         case "number":
-            content="<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + validate === true ? " required" : "" + "'>";
+            content="<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         default:
             console.log("Internal Append Box Error: type invalid");
     }
 
-    $("#content-box").append('<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box' + validate === true ? " validate" : "" + validate === true ? " required" : "" + '">' +
+    $("#content-box").append('<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box' + validate === true ? " validate" : "" + required === true ? " required" : "" + '">' +
         content +
         '</div>');
 }
 
 function ready() {
-    appendBox();
+    var data = [{
+        id:"-SKdjaijfuaisdvmadsoI",
+        type:"text",
+        val:"What is your full name?",
+        required:true,
+        validate:true
+    }];
+    for (var i = 0; i < data.length; i ++) {
+        append(data[i]);
+    }
 }
