@@ -10,7 +10,7 @@ function append(data) {
 	var required = data.required;
 	var validate = data.validate;
 	var content;
-var special = "";
+	var special = "";
 	if (required) {
 		special = " required";
 	}
@@ -24,7 +24,7 @@ var special = "";
 		content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='number' id='input-" + id + "' class='form-control number-input" + special + "'>";
 	}
 
-	
+
 	console.log(content);
 	var toappend = '<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box ' + special + '">' + content + '</div>';
 
