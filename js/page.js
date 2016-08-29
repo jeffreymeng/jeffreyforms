@@ -15,7 +15,7 @@ function append(data) {
             content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='text' id='input-" + id + "' class='form-control text-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         case "number":
-            content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
+            content = "<label for='input-" + id + "' class='label question label-" + type + "'>" + val + "<br><input type='number' id='input-" + id + "' class='form-control number-input" + validate === true ? " validate" : "" + required === true ? " required" : "" + "'>";
             break;
         default:
             console.log("Internal Append Box Error: type invalid");
