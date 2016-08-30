@@ -27,7 +27,7 @@ function append(data) {
 
 
 	console.log(content);
-	var toappend = '<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box ' + special + '">' + content + '<p id="form-input-box-' + id + '-error" class="text-danger error"></p></div>';
+	var toappend = '<div id="form-input-box-' + id + '" class="form-input-box input-box ' + type + '-box ' + special + '">' + content + '<p id="input-' + id + '-error" class="text-danger error"></p></div>';
 
 	console.log(toappend);
 	$("#main-content-box-page-1").append(toappend);
@@ -37,7 +37,7 @@ function append(data) {
 		
 		console.log(1);
 		
-		$("#form-input-box-" + id).keyup(function() {
+		$("#input-" + id).blur(function() {
 			var cr = validateInput($("#form-input-box-" + id).val(), type); //check result
 			if (cr.pass) {
 				//pass validation
