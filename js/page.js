@@ -38,7 +38,7 @@ function append(data) {
 		console.log(1);
 		$("#form-input-box-" + id).blur(function() {
 			if (cr.pass) {
-				//pass
+				//pass validation
 				window.valid = true;
 				$("#form-input-box-" + id + "-error").html("");
 				console.log(2);
