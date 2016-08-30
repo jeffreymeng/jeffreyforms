@@ -36,7 +36,8 @@ function append(data) {
 		var d = validate;
 		var cr = check($("#form-input-box-" + id).val(), type); //check result
 		console.log(1);
-		$("#form-input-box-" + id).blur(function() {
+		$(document).on("blur","#form-input-box-" + id,function() {
+
 			if (cr.pass) {
 				//pass validation
 				window.valid = true;
