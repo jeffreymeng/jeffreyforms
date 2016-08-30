@@ -164,7 +164,7 @@ function ready() {
 		required: true,
 		validate: {
 			type: "text",
-			condition: "contains",
+			condition: "matches",
 			value: "dog"
 		}
 	}];
