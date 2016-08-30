@@ -38,7 +38,7 @@ function append(data) {
 		console.log(1);
 		
 		$("#form-input-box-" + id).keyup(function() {
-			var cr = check($("#form-input-box-" + id).val(), type); //check result
+			var cr = validate($("#form-input-box-" + id).val(), type); //check result
 			if (cr.pass) {
 				//pass validation
 				window.valid = true;
@@ -50,20 +50,20 @@ function append(data) {
 				$("#form-input-box-" + id + "-error").html(cr.message);
 				window.valid = false;
 				console.log(cr);
-				console.log(check)
+				//console.log(check)
 				console.log(3);
 			}
 		});
 	}
 
-	function check(check, question) {
+	function validate(check, question) {
 		console.log(check);
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
 		var result;
 		var message;
-		if (question === "text") {
+		//if (question === "text") {
 			if (type === "text") {
 				if (condition === "contains") {
 					result = check.indexOf(value) > -1;
@@ -153,7 +153,7 @@ function append(data) {
 					message = "length must be between " + value.min + " and " + value.max + " exclusive.";
 				}
 			}
-		}
+		//}
 		return {
 			pass: result,
 			message: data.message || message
