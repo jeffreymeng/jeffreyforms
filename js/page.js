@@ -38,7 +38,7 @@ function append(data) {
 		console.log(1);
 		
 		$("#input-" + id).blur(function() {
-			var cr = validateInput($("#form-input-box-" + id).val(), type); //check result
+			var cr = validateInput($("#input-" + id).val(), type); //check result
 			if (cr.pass) {
 				//pass validation
 				window.valid = true;
@@ -58,6 +58,7 @@ function append(data) {
 
 	function validateInput(check, question) {
 		console.log(check);
+		console.log(d);
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
