@@ -31,20 +31,23 @@ function append(data) {
 
 	console.log(toappend);
 	$("#main-content-box-page-1").append(toappend);
+	console.log(validate);
 	if (validate) {
 		var d = validate;
 		var cr = check($("#form-input-box-" + id).val(), type); //check result
-
+		console.log(1);
 		$("#form-input-box-" + id).keyup(function() {
 			if (cr.pass) {
 				//pass
 				window.valid = true;
 				$("#form-input-box-" + id + "-error").html("");
+				console.log(2);
 			}
 			else {
 				//fail
 				$("#form-input-box-" + id + "-error").html(cr.message);
 				window.valid = false;
+				console.log(3);
 			}
 		});
 	}
