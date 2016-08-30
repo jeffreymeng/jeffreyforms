@@ -38,7 +38,7 @@ function append(data) {
 		console.log(1);
 		
 		$("#form-input-box-" + id).keyup(function() {
-			var cr = validate($("#form-input-box-" + id).val(), type); //check result
+			var cr = validateInput($("#form-input-box-" + id).val(), type); //check result
 			if (cr.pass) {
 				//pass validation
 				window.valid = true;
@@ -56,7 +56,7 @@ function append(data) {
 		});
 	}
 
-	function validate(check, question) {
+	function validateInput(check, question) {
 		console.log(check);
 		var type = d.type;
 		var condition = d.condition;
