@@ -53,6 +53,7 @@ function append(data) {
 	}
 
 	function check(check, question) {
+		console.log(check);
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
@@ -164,7 +165,7 @@ function ready() {
 		required: true,
 		validate: {
 			type: "text",
-			condition: "matches",
+			condition: "contains",
 			value: "dog"
 		}
 	}];
