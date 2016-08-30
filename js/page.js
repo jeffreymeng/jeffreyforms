@@ -56,9 +56,10 @@ function append(data) {
 	}
 
 	function validateInput(check, question) {
-		console.log(check);
-		console.log(d);
+		//console.log(check);
+	
 		var d = data.validate;
+		console.log(d);
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
