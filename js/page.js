@@ -35,10 +35,11 @@ function append(data) {
 		var d = validate;
 		var cr = check($("#form-input-box-" + id).val(), type); //check result
 
-		$("#form-input-box-" + id).blur(function() {
+		$("#form-input-box-" + id).keyup(function() {
 			if (cr.pass) {
 				//pass
 				window.valid = true;
+				$("#form-input-box-" + id + "-error").html("");
 			}
 			else {
 				//fail
