@@ -42,12 +42,12 @@ function append(data) {
 			if (cr.pass) {
 				//pass validation
 				window.valid = true;
-				$("#form-input-box-" + id + "-error").html("");
+				$("#input-" + id + "-error").html("");
 				console.log(2);
 			}
 			else {
 				//fail
-				$("#form-input-box-" + id + "-error").html(cr.message);
+				$("#input-" + id + "-error").html(cr.message);
 				window.valid = false;
 				console.log(cr);
 				//console.log(check)
