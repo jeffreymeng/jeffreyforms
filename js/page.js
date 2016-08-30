@@ -33,8 +33,7 @@ function append(data) {
 	$("#main-content-box-page-1").append(toappend);
 	console.log(validate);
 	if (validate) {
-		var d = validate;
-		
+
 		console.log(1);
 		
 		$("#input-" + id).blur(function() {
@@ -59,6 +58,7 @@ function append(data) {
 	function validateInput(check, question) {
 		console.log(check);
 		console.log(d);
+		var d = data.validate;
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
