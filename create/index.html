@@ -12,7 +12,6 @@
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery.toolbar.css" type="text/css">
 
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" type="text/css">
     <style>
@@ -59,13 +58,25 @@
         <div class="container">
             <h1>Your Forms</h1>
             <div data-spy="affix" data-offset-right="60" data-offset-bottom="60">
-<div class="btn-toolbar btn-toolbar-primary" id="toolbar"><i class="fa fa-plus"></i></div>
-
-            <div id="toolbar-content" class="hidden pull-left">
-                <a href="#"><i class="fa fa-plane"></i></a>
-                <a href="#"><i class="fa fa-car"></i></a>
-                <a href="#"><i class="fa fa-bicycle"></i></a>
-            </div></div>
+<div class="btn-group dropup">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-plus"></i>New Question
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li>Section</li>
+    <li>Short Answer</li>
+    <li>Paragraph</li>
+    <li>Grid</li>
+    <li>Date</li>
+    <li>Time</li>
+    <li>Mutiple Choice</li>
+    <li>Image/Video</li>
+    <li>Description Text</li>
+  </ul>
+</div>
+</div>
             
 
 
@@ -79,7 +90,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.toolbar.min.js"></script>
 
 
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
@@ -98,12 +108,7 @@
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
 
-                $('#toolbar').toolbar({
-                    content: '#toolbar-content',
-                    position: 'right',
-                    style: 'primary',
-                    animation: 'bounce'
-                });
+
             }
             else {
                 window.location.href = "/about/";
