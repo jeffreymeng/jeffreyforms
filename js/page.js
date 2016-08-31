@@ -42,15 +42,15 @@ function append(data) {
 				//pass validation
 				window.valid = true;
 				$("#input-" + id + "-error").html("");
-				console.log(2);
+				//console.log(2);
 			}
 			else {
 				//fail
 				$("#input-" + id + "-error").html(cr.message);
 				window.valid = false;
-				console.log(cr);
+				//console.log(cr);
 				//console.log(check)
-				console.log(3);
+				//console.log(3);
 			}
 		});
 	}
@@ -59,7 +59,7 @@ function append(data) {
 		//console.log(check);
 	
 		var d = data.validate;
-		console.log(d);
+		//console.log(d);
 		var type = d.type;
 		var condition = d.condition;
 		var value = d.value || null;
