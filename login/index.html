@@ -65,7 +65,6 @@
 	<script src="/js/jquery.js"></script>
 
 	<script type="text/javascript">
-	
 		/* global $*/
 		$(window).load(function() {
 			$('.form-group input').on('focus blur', function(e) {
@@ -75,11 +74,7 @@
 	</script>
 	<script>
 		/* global $ firebase*/
-		    firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    window.location.href = "/home/";
-  }
-});
+
 		$(window).on('keydown', function(e) {
 			if (e.which == 13) {
 				e.preventDefault();
@@ -120,14 +115,18 @@
 		}
 		if (getQuery("mode") === "logout") {
 			firebase.auth().signOut().then(function() {
-				window.onbeforeunload = function(e) {
 
-					window.location.search = "";
-				};
 				$("#logout").removeClass("hidden");
 			}, function(e) {
 				error(e.message, e);
 
+			});
+		}
+		else {
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					window.location.href = "/home/";
+				}
 			});
 		}
 		if (getQuery("mode") === "resetPassword") {
@@ -271,7 +270,6 @@
 				}
 			});
 		}
-
 	</script>
 </body>
 
