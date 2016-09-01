@@ -19,6 +19,68 @@
             min-height: 2000px;
             padding-top: 70px;
         }
+        
+        .fixed {
+            position: fixed;
+        }
+        /* sidebar */
+        
+        .bs-docs-sidebar {
+            padding-left: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* all links */
+        
+        .bs-docs-sidebar .nav>li>a {
+            color: #999;
+            border-left: 2px solid transparent;
+            padding: 4px 20px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+        /* nested links */
+        
+        .bs-docs-sidebar .nav .nav>li>a {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 30px;
+            font-size: 12px;
+        }
+        /* active & hover links */
+        
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #563d7c;
+            text-decoration: none;
+            background-color: transparent;
+            border-left-color: #563d7c;
+        }
+        /* all active links */
+        
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>.active:hover>a,
+        .bs-docs-sidebar .nav>.active:focus>a {
+            font-weight: 700;
+        }
+        /* nested active links */
+        
+        .bs-docs-sidebar .nav .nav>.active>a,
+        .bs-docs-sidebar .nav .nav>.active:hover>a,
+        .bs-docs-sidebar .nav .nav>.active:focus>a {
+            font-weight: 500;
+        }
+        /* hide inactive nested list */
+        
+        .bs-docs-sidebar .nav ul.nav {
+            display: none;
+        }
+        /* show active nested list */
+        
+        .bs-docs-sidebar .nav>.active>ul.nav {
+            display: block;
+        }
     </style>
 </head>
 
@@ -54,7 +116,7 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <div class="col-lg-12">
+    <div class="col-lg-12" id="container-main">
         <div class="container">
             <h1>Your Forms</h1>
             <div data-spy="affix" data-offset-right="60" data-offset-bottom="60">
@@ -62,8 +124,8 @@
                 <div class="btn-group" role="group">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        New Question <span class="caret"></span>
-                    </button>
+                            New Question <span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu">
                             <li><a href="#">Short Answer</a></li>
                             <li><a href="#">Paragraph</a></li>
@@ -81,8 +143,8 @@
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    New Element <span class="caret"></span>
-                </button>
+                            New Element <span class="caret"></span>
+                        </button>
                         <ul class="dropdown-menu">
                             <li><a href="#">Helper Text</a></li>
                             <li role="separator" class="divider"></li>
@@ -94,6 +156,9 @@
 
                         </ul>
                     </div>
+                    <button type="button" class="btn btn-default">
+                        <i id="settings" class="fa fa-cog" aria-hidden="true"></i> Settings
+                    </button>
                 </div>
 
 
@@ -103,6 +168,45 @@
 
             <hr>
             <p>Copyright &copy; 2016 Jeffrey Forms. All Rights Reserved.</p>
+        </div>
+    </div>
+    <div class="col-lg-12" id="container-options" class="hidden">
+        <div class="container">
+            <h1>Options</h1>
+            <div class="row">
+                <!--Nav Bar -->
+                <nav class="col-xs-3 bs-docs-sidebar">
+                    <ul id="sidebar" class="nav nav-stacked fixed">
+                        <li>
+                            <a href="#security">Security</a>
+                            <ul class="nav nav-stacked">
+                                <li><a href="#visibility">Visibility</a></li>
+                                <li><a href="#password">Password</a></li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </nav>
+                <!--Main Content -->
+                <div class="col-xs-9">
+                    <section id="security" class="group">
+                        <h3>Security</h3>
+                        <div id="visibility" class="subgroup">
+                            <h4>Visibility</h4>
+                        </div>
+                        <div id="password" class="subgroup">
+                            <h4>Password</h4>
+                        </div>
+                    </section>
+                    
+                </div>
+            </div>
+
+
+
+
+
+
         </div>
     </div>
 
@@ -116,6 +220,7 @@
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
     <script>
         // Initialize Firebase
+        /* global firebase */
         var config = {
             apiKey: "AIzaSyCKwBAaeo8kzGBwKyR6TwuI88womFvtRIw",
             authDomain: "jfiles.firebaseapp.com",
@@ -126,9 +231,22 @@
     </script>
 
     <script>
+        /* global firebase $ */
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+                $('#container-options').scrollspy({
+                    target: '.bs-docs-sidebar',
+                    offset: 40
+                });
 
+                $("#settings").click(function() {
+                    $("#container-main").addClass("hidden");
+                    $("#container-options").removeClass("hidden");
+                });
+                $("#settings-back").click(function() {
+                    $("#container-options").addClass("hidden");
+                    $("#container-main").removeClass("hidden");
+                });
 
             }
             else {
@@ -136,6 +254,26 @@
             }
         });
     </script>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Options</h4>
+                </div>
+                <div class="modal-body">
+                    <h1></h1>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 
 </html>
