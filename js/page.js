@@ -169,6 +169,7 @@ function ready() {
 		type: "text",
 		val: "What is your full name?",
 		required: true,
+		message:"Enter dog",
 		validate: {
 			type: "text",
 			condition: "contains",
