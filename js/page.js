@@ -174,6 +174,17 @@ function ready() {
 			condition: "contains",
 			value: "dog"
 		}
+	},
+	{
+		id: "-SKdjaijfuaisdvmadsoI",
+		type: "text",
+		val: "What is 8 + 10?",
+		required: true,
+		validate: {
+			type: "number",
+			condition: "equals",
+			value: 18
+		}
 	}];
 	var info = {
 		submit: "Submit"
