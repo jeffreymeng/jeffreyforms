@@ -96,27 +96,27 @@ function append(data) {
 					message = "Data must be an integer";
 				}
 				else if (condition === "greater_than") {
-					result = check > value;
+					result = parseInt(check) > value;
 					message = "Data must be greater than " + value;
 				}
 				else if (condition === "less_than") {
-					result = check < value;
+					result = parseInt(check) < value;
 					message = "Data must be less than " + value;
 				}
 				else if (condition === "greater_than_or_equal_to") {
-					result = check >= value;
+					result = parseInt(check) >= value;
 					message = "Data must be greater than or equal to " + value;
 				}
 				else if (condition === "less_than_or_equal_to") {
-					result = check <= value;
+					result = parseInt(check) <= value;
 					message = "Data must be less than or equal to " + value;
 				}
 				else if (condition === "equals") {
-					result = check === value;
+					result = parseInt(check) === value;
 					message = "Data must be equal to " + value;
 				}
 				else if (condition === "between") {
-					result = check < value.max && check > value.min;
+					result = parseInt(check) < value.max && check > value.min;
 					message = "Data must be between " + value.min + " and " + value.max + " exclusive.";
 				}
 			}
