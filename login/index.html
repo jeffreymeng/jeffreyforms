@@ -28,7 +28,7 @@
 	</div>
 
 	<div class="form-box">
-		<div class="head" id="title">Login to Jeffrey Forms</div>
+		<div class="head" id="title">Login to Jeffrey Drive</div>
 		<div id="login-form">
 			<div class="form-group" id="email-box">
 				<label class="label-control"><span class="label-text">Email</span></label>
@@ -260,22 +260,14 @@
 						})));
 					}
 					firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-						 firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                console.log(user);
-            } else {
-            	console.log("error");
-            }
-            
-        });
-						/*
+						 
 						if (!getQuery("continue")) {
 							window.location.href = "/home/";
 						}
 						else {
 							window.location.href = decodeURIComponent(getQuery("continue"));
 						}
-						*/
+						
 					}).catch(function(e) {
 						error(e.message, e);
 					});
