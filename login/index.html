@@ -50,18 +50,18 @@
 
 
 
-<script src="https://www.gstatic.com/firebasejs/3.3.1/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyB7qu5kfGdvmLSoghSrEmSmwu4AEsR4WKU",
-    authDomain: "jdrive.firebaseapp.com",
-    databaseURL: "https://jdrive.firebaseio.com",
-    storageBucket: "firebase-jdrive.appspot.com",
-  };
-  firebase.initializeApp(config);
-</script>
-    
+	<script src="https://www.gstatic.com/firebasejs/3.3.1/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyB7qu5kfGdvmLSoghSrEmSmwu4AEsR4WKU",
+			authDomain: "jdrive.firebaseapp.com",
+			databaseURL: "https://jdrive.firebaseio.com",
+			storageBucket: "firebase-jdrive.appspot.com",
+		};
+		firebase.initializeApp(config);
+	</script>
+
 
 
 	<script src="/js/jquery.js"></script>
@@ -260,14 +260,15 @@
 						})));
 					}
 					firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-						 firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                console.log(user);
-            } else {
-            	console.log("error");
-            }
-            
-        });
+						firebase.auth().onAuthStateChanged(function(user) {
+							if (user) {
+								console.log(user);
+							}
+							else {
+								console.log("error");
+							}
+
+						});
 						/*
 						if (!getQuery("continue")) {
 							window.location.href = "/home/";
